@@ -1,55 +1,55 @@
-# Правила работы с кодом Boiko-School
+# Boiko-School code rules
 
-Коротко: код живет в организации, в `master` попадает только через PR со squash, секретов и данных детей в git нет. Остальное — здравый смысл.
+In short: code lives in the organization, reaches `master` only through a squash-merged PR, and git never holds secrets or children's data. Everything else is common sense.
 
-## Репозитории
+## Repositories
 
-- Весь код в репозиториях организации принадлежит Boiko-School — независимо от того, кто, когда и как его написал: сотрудник, подрядчик, AI-агент, перенесен ли он из личного аккаунта, Bitbucket или другого места. Положив код в организацию, автор передает его организации. Для сотрудников и подрядчиков это закрепляется и в договоре.
-- Весь рабочий код — в организации [Boiko-School](https://github.com/Boiko-School). Не в личных аккаунтах, не на Bitbucket, не в локальной папке без удаленного репозитория.
-- Все репозитории приватные. Публичным может быть только то, что и так публично: сайт на GitHub Pages и подобное. Публичный репозиторий создает админ.
-- Ветка по умолчанию — `master`.
-- Новый репозиторий — под задачу, о которой знает техлид. Пробовать идеи можно, но эксперимент, ставший рабочим, переезжает в организацию, а брошенный — в архив.
-- Название — латиницей, kebab-case, по смыслу: `music-school`, а не `x-meal-4-final`.
-- Брошенный проект архивируем (Archive), а не удаляем.
-- В каждом репозитории есть README: что это, как запустить, где работает (прод, dev) и кто отвечает.
+- All code in the organization's repositories belongs to Boiko-School, regardless of who wrote it, when or how: an employee, a contractor, an AI agent, or code moved in from a personal account, Bitbucket or anywhere else. By putting code into the organization, the author hands it over to the organization. For employees and contractors this is also stated in their contracts.
+- All working code lives in the [Boiko-School](https://github.com/Boiko-School) organization. Not in personal accounts, not on Bitbucket, not in a local folder without a remote.
+- All repositories are private. Only things that are public anyway can be public: a GitHub Pages site and the like. Only an admin creates a public repository.
+- The default branch is `master`.
+- A new repository is created for a task the tech lead knows about. Experimenting is fine, but an experiment that becomes real moves into the organization, and an abandoned one gets archived.
+- Names are in Latin letters, kebab-case, and say what the thing is: `music-school`, not `x-meal-4-final`.
+- Abandoned projects are archived, not deleted.
+- Every repository has a README: what it is, how to run it, where it runs (prod, dev) and who owns it.
 
-## Ветки и pull request
+## Branches and pull requests
 
-- В `master` напрямую не пушим. Любое изменение — ветка и PR.
-- Мерж только squash. Заголовок PR становится коммитом в `master`, поэтому пишем по-человечески, что и зачем: `Billing: transfer balance between contracts`. Не `S44`, не `32`, не `slop2`.
-- Имя ветки — любое осмысленное: `fix/portmone-webhook`, `meal-orders-ui`.
-- Ветка удаляется после мержа автоматически.
-- Ревью вторым человеком обязательно, если код трогает деньги, данные детей, авторизацию или доступы. Остальное можно мержить самому, когда CI зеленый.
-- PR — небольшие. Большой рефакторинг делаем по частям.
-- Force-push в свою ветку — можно, в `master` — нельзя.
-- Админ может обойти защиту в аварийной ситуации; GitHub это логирует, и потом объясняем в PR или чате, что случилось.
+- No direct pushes to `master`. Every change goes through a branch and a PR.
+- Squash merge only. The PR title becomes the commit on `master`, so write it like a human, saying what and why: `Billing: transfer balance between contracts`. Not `S44`, not `32`, not `slop2`.
+- Branch names: anything meaningful, e.g. `fix/portmone-webhook`, `meal-orders-ui`.
+- Branches are deleted automatically after merge.
+- A second-person review is required when the code touches money, children's data, authentication or access rights. Anything else you can merge yourself once CI is green.
+- Keep PRs small. Big refactorings go in parts.
+- Force-pushing your own branch is fine; force-pushing `master` is not.
+- An admin may bypass protection in an emergency; GitHub logs it, and afterwards we explain what happened in the PR or in chat.
 
-## Секреты
+## Secrets
 
-- Никаких паролей, токенов, ключей, сертификатов и `.env` в репозитории. Ни в приватном, ни «временно», ни в README, ни в примерах.
-- Секреты прода — в Secret Manager GCP. Локально — `.env`, который в `.gitignore`. В репозитории только `.env.example` с пустыми значениями.
-- Секрет попал в git — значит, он скомпрометирован. Сначала меняем его, потом чистим историю. Удаление коммита ничего не спасает.
-- Стартовые пароли вроде `admin/admin` допустимы только с принудительной сменой при первом входе.
-- Проверка: [gitleaks](https://github.com/gitleaks/gitleaks) в pre-commit и в CI.
+- No passwords, tokens, keys, certificates or `.env` files in the repository. Not in a private one, not "temporarily", not in a README, not in examples.
+- Production secrets live in GCP Secret Manager. Locally, use a `.env` that is in `.gitignore`. The repository only holds a `.env.example` with empty values.
+- A secret that got into git is compromised. Rotate it first, then clean the history. Deleting the commit does not save it.
+- Default passwords like `admin/admin` are only acceptable with a forced change on first login.
+- Checks: [gitleaks](https://github.com/gitleaks/gitleaks) in pre-commit and in CI.
 
-## Данные людей
+## Personal data
 
-- Персональные данные детей, родителей и сотрудников в репозиторий не попадают: ни дампы, ни выгрузки, ни скриншоты, ни «тестовые» данные из прода. Тестовые данные — выдуманные.
-- Дампы рабочей базы не храним на ноутбуках. Нужны для отладки — берем обезличенные и удаляем после.
+- Personal data of children, parents and staff never goes into a repository: no dumps, no exports, no screenshots, no "test" data taken from production. Test data is made up.
+- Production database dumps are not kept on laptops. If you need one for debugging, take an anonymized one and delete it afterwards.
 
-## AI-агенты
+## AI agents
 
-- Claude, Copilot и другие агенты работают по тем же правилам: ветка, PR, осмысленный заголовок, ревью человеком там, где оно обязательно.
-- Агент не получает секретов прода.
-- `CLAUDE.md` и `AGENTS.md` в репозитории — нормально.
+- Claude, Copilot and other agents follow the same rules: a branch, a PR, a meaningful title, human review where review is required.
+- Agents never get production secrets.
+- `CLAUDE.md` and `AGENTS.md` in a repository are fine.
 
-## Минимум в каждом репозитории
+## Minimum for every repository
 
-- README.
-- `.gitignore` с `.env`.
-- `.env.example`, если есть настройки.
-- CI: сборка, тесты, gitleaks.
+- A README.
+- A `.gitignore` that includes `.env`.
+- A `.env.example` if there are settings.
+- CI: build, tests, gitleaks.
 
-## Чего не требуем
+## What we don't require
 
-Conventional commits, двух апрувов, CODEOWNERS, подписанных коммитов, шаблонов issue, GitFlow с `develop`, процента покрытия тестами. Понадобится — добавим.
+Conventional commits, two approvals, CODEOWNERS, signed commits, issue templates, GitFlow with a `develop` branch, a test coverage percentage. We'll add any of these if we ever need them.
